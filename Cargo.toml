@@ -16,7 +16,8 @@ thiserror = "2.0"
 
 [dependencies.envir]
 version = "1.1"
-features = ["extrapolation", "serde"]
+default-features = false
+features = ["dotenv", "extrapolation", "serde"]
 optional = true
 
 [dependencies.chrono]
