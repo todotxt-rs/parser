@@ -1,6 +1,6 @@
 use nom::bytes::complete::{tag, take};
 use nom::combinator::{complete, opt, rest};
-use nom::sequence::tuple;
+use nom::Parser as _;
 use std::collections::BTreeMap;
 
 macro_rules! return_error (
@@ -17,14 +17,15 @@ macro_rules! return_error (
 );
 
 fn date(input: &str) -> nom::IResult<&str, crate::Date> {
-    let (input, (year, _, month, _, day, _)) = tuple((
+    let (input, (year, _, month, _, day, _)) = (
         take(4usize),
         tag("-"),
         take(2usize),
         tag("-"),
         take(2usize),
         tag(" "),
-    ))(input)?;
+    )
+        .parse(input)?;
 
     let year = match year.parse() {
         Ok(year) => year,
@@ -50,7 +51,7 @@ fn date(input: &str) -> nom::IResult<&str, crate::Date> {
 }
 
 fn priority(input: &str) -> nom::IResult<&str, crate::Priority> {
-    let (input, (_, priority, ..)) = tuple((tag("("), take(1usize), tag(") ")))(input)?;
+    let (input, (_, priority, ..)) = (tag("("), take(1usize), tag(") ")).parse(input)?;
 
     let priority = match priority.chars().next() {
         Some(c) => c.try_into().unwrap_or_default(),
@@ -131,13 +132,14 @@ fn get_keywords(subject: &str) -> (String, BTreeMap<String, String>) {
 }
 
 fn parse(input: &str) -> nom::IResult<&str, crate::task::Simple> {
-    let (input, (finished, priority, finish_date, create_date, rest)) = tuple((
+    let (input, (finished, priority, finish_date, create_date, rest)) = (
         opt(complete(tag("x "))),
         opt(complete(priority)),
         opt(complete(date)),
         opt(complete(date)),
         rest,
-    ))(input)?;
+    )
+        .parse(input)?;
 
     let mut task = crate::task::Simple {
         priority: priority.unwrap_or_default(),
