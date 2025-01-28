@@ -35,7 +35,7 @@ features = ["supports-colors"]
 optional = true
 
 [dependencies.rand]
-version = "0.8"
+version = "0.9"
 optional = true
 
 [dependencies.serde]
