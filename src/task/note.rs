@@ -115,11 +115,10 @@ impl Note {
     }
 
     fn new_note_id() -> String {
-        use rand::distributions::Alphanumeric;
-        use rand::Rng;
+        use rand::Rng as _;
 
-        rand::thread_rng()
-            .sample_iter(&Alphanumeric)
+        rand::rng()
+            .sample_iter(&rand::distr::Alphanumeric)
             .map(char::from)
             .take(3)
             .collect()
