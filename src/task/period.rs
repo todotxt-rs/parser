@@ -14,11 +14,7 @@ impl Period {
 
     pub fn days_in_month(month: u32, year: i32) -> u32 {
         if month == 2 {
-            if Self::is_leap_year(year) {
-                29
-            } else {
-                28
-            }
+            if Self::is_leap_year(year) { 29 } else { 28 }
         } else if [1, 3, 5, 7, 8, 10, 12].contains(&month) {
             31
         } else {

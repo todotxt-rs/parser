@@ -1,6 +1,6 @@
+use nom::Parser as _;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::{complete, opt, rest};
-use nom::Parser as _;
 use std::collections::BTreeMap;
 
 macro_rules! return_error (
