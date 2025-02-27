@@ -6,8 +6,7 @@ description = "Parser for the todo.txt format"
 license = "MIT"
 keywords = ["parser", "todotxt"]
 repository = "https://github.com/todotxt-rs/parser"
-edition = "2021"
-rust-version = "1.80.0"
+edition = "2024"
 
 [dependencies]
 nom = "8.0"
