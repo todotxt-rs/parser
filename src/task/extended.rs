@@ -45,10 +45,7 @@ impl std::convert::From<super::Simple> for Extended {
         let mut recurrence = None;
 
         if let Some(rec) = inner.tags.get("rec") {
-            recurrence = match super::Recurrence::from_str(rec) {
-                Ok(rec) => Some(rec),
-                Err(_) => None,
-            };
+            recurrence = super::Recurrence::from_str(rec).ok();
         }
         inner.tags.remove("rec");
 

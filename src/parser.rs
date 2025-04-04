@@ -157,17 +157,11 @@ fn parse(input: &str) -> nom::IResult<&str, crate::task::Simple> {
     task.subject = subject;
 
     if let Some(due) = tags.remove("due") {
-        task.due_date = match crate::Date::parse_from_str(&due, "%Y-%m-%d") {
-            Ok(due) => Some(due),
-            Err(_) => None,
-        };
+        task.due_date = crate::Date::parse_from_str(&due, "%Y-%m-%d").ok();
     }
 
     if let Some(t) = tags.remove("t") {
-        task.threshold_date = match crate::Date::parse_from_str(&t, "%Y-%m-%d") {
-            Ok(t) => Some(t),
-            Err(_) => None,
-        };
+        task.threshold_date = crate::Date::parse_from_str(&t, "%Y-%m-%d").ok();
     }
 
     task.tags = tags;
