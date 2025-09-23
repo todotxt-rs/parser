@@ -80,10 +80,10 @@ impl Note {
 
             let note_file = Self::note_file(filename)?;
 
-            if let Some(note_dir) = note_file.parent() {
-                if !note_dir.exists() {
-                    std::fs::create_dir_all(note_dir).map_err(crate::Error::Note)?;
-                }
+            if let Some(note_dir) = note_file.parent()
+                && !note_dir.exists()
+            {
+                std::fs::create_dir_all(note_dir).map_err(crate::Error::Note)?;
             }
 
             let mut f = std::fs::File::create(note_file).map_err(crate::Error::Note)?;
