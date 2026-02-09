@@ -115,7 +115,7 @@ impl Note {
     }
 
     fn new_note_id() -> String {
-        use rand::Rng as _;
+        use rand::RngExt as _;
 
         rand::rng()
             .sample_iter(&rand::distr::Alphanumeric)
