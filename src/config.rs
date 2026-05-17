@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-#[derive(Clone, envir::Deserialize, envir::Serialize)]
+#[derive(Clone, Debug, envir::Deserialize, envir::Serialize)]
 #[envir(prefix = "COLOR_")]
 pub struct Colors {
     #[envir(default)]
