@@ -112,6 +112,22 @@ impl std::ops::AddAssign<u8> for Priority {
     }
 }
 
+#[allow(clippy::suspicious_arithmetic_impl)]
+impl std::ops::Sub<u8> for Priority {
+    type Output = Priority;
+
+    fn sub(self, rhs: u8) -> Self::Output {
+        Self(u8::min(self.0 + rhs, 25))
+    }
+}
+
+#[allow(clippy::suspicious_op_assign_impl)]
+impl std::ops::SubAssign<u8> for Priority {
+    fn sub_assign(&mut self, rhs: u8) {
+        self.0 = u8::min(self.0 + rhs, 25);
+    }
+}
+
 #[cfg(test)]
 mod test {
     #[test]
@@ -166,5 +182,16 @@ mod test {
         assert_eq!(b, 'a');
 
         assert_eq!(b + 1, 'a');
+    }
+
+    #[test]
+    fn sub() {
+        let mut y = crate::Priority::from(24);
+        assert_eq!(y, 'y');
+
+        y -= 1;
+        assert_eq!(y, 'z');
+
+        assert_eq!(y - 1, 'z');
     }
 }
