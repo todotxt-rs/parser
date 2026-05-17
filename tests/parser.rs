@@ -256,4 +256,16 @@ mod test {
 
         assert_eq!(todo_txt::parser::task(&line), task);
     }
+
+    #[test]
+    fn relative_date() {
+        let line = "relative due due:6months t:-7d".to_string();
+        let task = todo_txt::parser::task(&line);
+
+        let due_date = todo_txt::date::today() + chrono::TimeDelta::days((6. * 30.5) as i64);
+        let threshold_date = todo_txt::date::today() - chrono::TimeDelta::weeks(1);
+
+        assert_eq!(task.due_date, Some(due_date));
+        assert_eq!(task.threshold_date, Some(threshold_date));
+    }
 }
