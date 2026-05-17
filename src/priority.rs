@@ -98,6 +98,20 @@ impl std::cmp::Ord for Priority {
     }
 }
 
+impl std::ops::Add<u8> for Priority {
+    type Output = Priority;
+
+    fn add(self, rhs: u8) -> Self::Output {
+        Self(self.0.saturating_sub(rhs))
+    }
+}
+
+impl std::ops::AddAssign<u8> for Priority {
+    fn add_assign(&mut self, rhs: u8) {
+        self.0 = self.0.saturating_sub(rhs);
+    }
+}
+
 #[cfg(test)]
 mod test {
     #[test]
@@ -141,5 +155,16 @@ mod test {
 
         assert_eq!(a, 'a');
         assert_eq!(a, 'A');
+    }
+
+    #[test]
+    fn add() {
+        let mut b = crate::Priority::from(1);
+        assert_eq!(b, 'b');
+
+        b += 1;
+        assert_eq!(b, 'a');
+
+        assert_eq!(b + 1, 'a');
     }
 }
