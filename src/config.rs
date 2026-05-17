@@ -123,7 +123,7 @@ impl Config {
         envir::set("LIGHT_RED", "\x1B[1;31m");
         envir::set("LIGHT_GREEN", "\x1B[1;32m");
         envir::set("YELLOW", "\x1B[1;33m");
-        envir::set("LIGHT_BLUE", "\x1B[1;3");
+        envir::set("LIGHT_BLUE", "\x1B[1;34m");
         envir::set("LIGHT_PURPLE", "\x1B[1;35m");
         envir::set("LIGHT_CYAN", "\x1B[1;36m");
         envir::set("WHITE", "\x1B[1;37m");
