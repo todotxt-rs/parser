@@ -12,6 +12,7 @@ pub enum Note {
 }
 
 impl Note {
+    #[must_use]
     pub fn from_file(filename: &str) -> Self {
         use std::io::Read;
 
@@ -46,6 +47,7 @@ impl Note {
         }
     }
 
+    #[must_use]
     pub fn content(&self) -> Option<String> {
         match *self {
             Note::None => None,

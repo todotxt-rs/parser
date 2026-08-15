@@ -12,6 +12,7 @@ impl Period {
         year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
     }
 
+    #[must_use]
     pub fn days_in_month(month: u32, year: i32) -> u32 {
         if month == 2 {
             if Self::is_leap_year(year) { 29 } else { 28 }

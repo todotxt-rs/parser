@@ -13,10 +13,12 @@ pub struct Extended {
 }
 
 impl Extended {
+    #[must_use]
     pub fn has_note(&self) -> bool {
         self.note != super::Note::None
     }
 
+    #[must_use]
     fn note(task: &super::Simple) -> super::Note {
         if let Some(file) = task.tags.get(&Self::tag_name()) {
             super::Note::from_file(file)
@@ -25,6 +27,7 @@ impl Extended {
         }
     }
 
+    #[must_use]
     fn tag_name() -> String {
         match std::env::var("TODO_NOTE_TAG") {
             Ok(tag) => tag,
