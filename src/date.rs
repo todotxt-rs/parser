@@ -6,11 +6,11 @@ pub fn today() -> Date {
 }
 
 pub fn parse(s: &str) -> Option<Date> {
+    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+
     if let Ok(date) = crate::Date::parse_from_str(s, "%Y-%m-%d") {
         return Some(date);
     }
-
-    static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
 
     let regex = REGEX.get_or_init(|| {
         regex::Regex::new(
