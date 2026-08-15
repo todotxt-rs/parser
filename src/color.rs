@@ -32,10 +32,10 @@ impl std::str::FromStr for Color {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let ansi_color = s.into();
 
-        let color = if ansi_color != owo_colors::AnsiColors::White {
-            Self::Colored(ansi_color)
-        } else {
+        let color = if ansi_color == owo_colors::AnsiColors::White {
             Self::Raw(s.replace("\\\\033", "\x1B"))
+        } else {
+            Self::Colored(ansi_color)
         };
 
         Ok(color)
