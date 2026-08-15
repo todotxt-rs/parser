@@ -27,24 +27,20 @@ fn date(input: &str) -> nom::IResult<&str, crate::Date> {
     )
         .parse(input)?;
 
-    let year = match year.parse() {
-        Ok(year) => year,
-        Err(_) => return_error!(1),
+    let Ok(year) = year.parse() else {
+        return_error!(1);
     };
 
-    let month = match month.parse() {
-        Ok(month) => month,
-        Err(_) => return_error!(2),
+    let Ok(month) = month.parse() else {
+        return_error!(2);
     };
 
-    let day = match day.parse() {
-        Ok(day) => day,
-        Err(_) => return_error!(3),
+    let Ok(day) = day.parse() else {
+        return_error!(3);
     };
 
-    let date = match crate::Date::from_ymd_opt(year, month, day) {
-        Some(date) => date,
-        None => return_error!(4),
+    let Some(date) = crate::Date::from_ymd_opt(year, month, day) else {
+        return_error!(4);
     };
 
     Ok((input, date))

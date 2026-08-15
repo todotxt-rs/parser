@@ -27,24 +27,18 @@ impl Note {
             }
         };
 
-        let file = match std::fs::File::open(note_file.clone()) {
-            Ok(file) => file,
-            Err(_) => {
-                log::error!("Unable to open {note_file:?}");
-                return Note::Short(filename.to_string());
-            }
+        let Ok(file) = std::fs::File::open(note_file.clone()) else {
+            log::error!("Unable to open {note_file:?}");
+            return Note::Short(filename.to_string());
         };
 
         let mut buffer = std::io::BufReader::new(file);
         let mut content = String::new();
 
-        match buffer.read_to_string(&mut content) {
-            Ok(_) => (),
-            Err(_) => {
-                log::error!("Unable to read {note_file:?}");
-                return Note::Short(filename.to_string());
-            }
-        };
+        if buffer.read_to_string(&mut content).is_err() {
+            log::error!("Unable to read {note_file:?}");
+            return Note::Short(filename.to_string());
+        }
 
         Note::Long {
             filename: filename.to_string(),
@@ -125,9 +119,8 @@ impl Note {
     }
 
     fn note_file(filename: &str) -> crate::Result<std::path::PathBuf> {
-        let todo_dir = match std::env::var("TODO_DIR") {
-            Ok(todo_dir) => todo_dir,
-            Err(_) => return Err(crate::Error::Env),
+        let Ok(todo_dir) = std::env::var("TODO_DIR") else {
+            return Err(crate::Error::Env);
         };
 
         let note_dir = match std::env::var("TODO_NOTES_DIR") {
