@@ -72,7 +72,7 @@ impl std::str::FromStr for Extended {
     type Err = std::convert::Infallible;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        super::Simple::from_str(s).map(|x| x.into())
+        super::Simple::from_str(s).map(Into::into)
     }
 }
 
