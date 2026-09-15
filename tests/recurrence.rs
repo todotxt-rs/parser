@@ -1,6 +1,5 @@
 #[cfg(all(test, feature = "extended"))]
 mod test {
-    use chrono::NaiveDate;
     use std::str::FromStr;
     use todo_txt::task::Recurrence;
 
@@ -25,8 +24,8 @@ mod test {
     #[test]
     fn add_years() {
         let current =
-            Recurrence::from_str("4y").unwrap() + NaiveDate::from_ymd_opt(1998, 1, 1).unwrap();
-        let expected = NaiveDate::from_ymd_opt(2002, 1, 1).unwrap();
+            Recurrence::from_str("4y").unwrap() + jiff::civil::date(1998, 1, 1);
+        let expected = jiff::civil::date(2002, 1, 1);
 
         assert_eq!(current, expected);
     }
@@ -34,8 +33,8 @@ mod test {
     #[test]
     fn add_months() {
         let current =
-            Recurrence::from_str("4m").unwrap() + NaiveDate::from_ymd_opt(1999, 11, 1).unwrap();
-        let expected = NaiveDate::from_ymd_opt(2000, 3, 1).unwrap();
+            Recurrence::from_str("4m").unwrap() + jiff::civil::date(1999, 11, 1);
+        let expected = jiff::civil::date(2000, 3, 1);
 
         assert_eq!(current, expected);
     }
@@ -43,8 +42,8 @@ mod test {
     #[test]
     fn add_months_extra() {
         let current =
-            Recurrence::from_str("2m").unwrap() + NaiveDate::from_ymd_opt(2009, 12, 31).unwrap();
-        let expected = NaiveDate::from_ymd_opt(2010, 2, 28).unwrap();
+            Recurrence::from_str("2m").unwrap() + jiff::civil::date(2009, 12, 31);
+        let expected = jiff::civil::date(2010, 2, 28);
 
         assert_eq!(current, expected);
     }
@@ -52,8 +51,8 @@ mod test {
     #[test]
     fn add_months_sticky() {
         let current =
-            Recurrence::from_str("3m").unwrap() + NaiveDate::from_ymd_opt(2010, 2, 28).unwrap();
-        let expected = NaiveDate::from_ymd_opt(2010, 5, 31).unwrap();
+            Recurrence::from_str("3m").unwrap() + jiff::civil::date(2010, 2, 28);
+        let expected = jiff::civil::date(2010, 5, 31);
 
         assert_eq!(current, expected);
     }

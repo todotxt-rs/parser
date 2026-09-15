@@ -39,7 +39,7 @@ fn date(input: &str) -> nom::IResult<&str, crate::Date> {
         return_error!(3);
     };
 
-    let Some(date) = crate::Date::from_ymd_opt(year, month, day) else {
+    let Ok(date) = crate::Date::new(year, month, day) else {
         return_error!(4);
     };
 

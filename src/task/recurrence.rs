@@ -49,24 +49,24 @@ impl std::fmt::Display for Recurrence {
     }
 }
 
-impl std::ops::Add<chrono::NaiveDate> for Recurrence {
-    type Output = chrono::NaiveDate;
+impl std::ops::Add<jiff::civil::Date> for Recurrence {
+    type Output = jiff::civil::Date;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
+        use jiff::ToSpan as _;
         use super::Period::{self, *};
-        use chrono::{Datelike, Duration};
 
         let delta_months = match self.period {
             #[allow(clippy::suspicious_arithmetic_impl)]
             Year => 12 * self.num as u32,
             Month => self.num as u32,
-            Week => return rhs + Duration::weeks(self.num),
-            Day => return rhs + Duration::days(self.num),
+            Week => return rhs + self.num.weeks(),
+            Day => return rhs + self.num.days(),
         };
 
-        let mut y = rhs.year();
-        let mut m = rhs.month();
-        let mut d = rhs.day();
+        let mut y = rhs.year() as i32;
+        let mut m = rhs.month() as u32;
+        let mut d = rhs.day() as u32;
 
         // Semantics taken from
         //  https://github.com/dbeniamine/todo.txt-vim/blob/259125d9efe93f69582f50ef68c17e20fd1e963a/autoload/todo.vim#L531-L538
@@ -79,6 +79,6 @@ impl std::ops::Add<chrono::NaiveDate> for Recurrence {
             d = Period::days_in_month(m, y);
         }
 
-        chrono::NaiveDate::from_ymd_opt(y, m, d).unwrap()
+        jiff::civil::date(y as i16, m as i8, d as i8)
     }
 }

@@ -9,6 +9,7 @@ repository = "https://github.com/todotxt-rs/parser"
 edition = "2024"
 
 [dependencies]
+jiff = "0.2"
 nom = "8.0"
 regex = "1.0"
 thiserror = "2.0"
@@ -18,11 +19,6 @@ version = "1.3"
 default-features = false
 features = ["derive", "dotenv", "extrapolation"]
 optional = true
-
-[dependencies.chrono]
-version = "0.4"
-features = ["clock", "std"]
-default-features = false
 
 [dependencies.log]
 version = "0.4"
@@ -54,7 +50,7 @@ doc-scrape-examples = true
 default = []
 config = ["envir", "owo-colors"]
 extended = ["log", "rand"]
-serde = ["dep:serde", "chrono/serde"]
+serde = ["dep:serde", "jiff/serde"]
 
 [package.metadata.docs.rs]
 all-features = true

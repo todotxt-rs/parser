@@ -19,9 +19,9 @@ mod test {
             subject: "@Email SoAndSo at soandso@example.com".to_string(),
             priority: 1.into(),
             finished: true,
-            due_date: todo_txt::Date::from_ymd_opt(2019, 2, 10),
-            finish_date: todo_txt::Date::from_ymd_opt(2019, 2, 15),
-            create_date: todo_txt::Date::from_ymd_opt(2019, 2, 5),
+            due_date: todo_txt::Date::new(2019, 2, 10).ok(),
+            finish_date: todo_txt::Date::new(2019, 2, 15).ok(),
+            create_date: todo_txt::Date::new(2019, 2, 5).ok(),
 
             ..Default::default()
         };
@@ -104,16 +104,16 @@ mod test {
 
         assert_eq!(task.subject, "Test");
         assert_eq!(task.priority, 26);
-        assert_eq!(task.create_date, todo_txt::Date::from_ymd_opt(2018, 3, 1));
-        assert_eq!(task.finish_date, todo_txt::Date::from_ymd_opt(2018, 3, 4));
+        assert_eq!(task.create_date, todo_txt::Date::new(2018, 3, 1).ok());
+        assert_eq!(task.finish_date, todo_txt::Date::new(2018, 3, 4).ok());
         assert!(!task.finished);
         assert_eq!(task.contexts[0], "context_a");
         assert_eq!(task.contexts[1], "context_b");
         assert_eq!(
             task.threshold_date,
-            todo_txt::Date::from_ymd_opt(2018, 3, 2)
+            todo_txt::Date::new(2018, 3, 2).ok()
         );
-        assert_eq!(task.due_date, todo_txt::Date::from_ymd_opt(2018, 3, 3));
+        assert_eq!(task.due_date, todo_txt::Date::new(2018, 3, 3).ok());
         assert!(task.projects.is_empty());
         assert_eq!(task.hashtags[0], "tag_a");
         assert_eq!(task.hashtags[1], "tag_b");

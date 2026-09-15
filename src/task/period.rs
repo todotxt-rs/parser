@@ -57,8 +57,8 @@ impl std::fmt::Display for Period {
     }
 }
 
-impl std::ops::Add<chrono::NaiveDate> for Period {
-    type Output = chrono::NaiveDate;
+impl std::ops::Add<jiff::civil::Date> for Period {
+    type Output = jiff::civil::Date;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
         let rec = super::Recurrence {

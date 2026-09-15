@@ -24,7 +24,7 @@ pub struct Simple {
 
 impl Simple {
     pub fn complete(&mut self) {
-        let today = chrono::Local::now().date_naive();
+        let today = jiff::Zoned::now().date();
 
         self.finished = true;
         if self.create_date.is_some() {
@@ -81,21 +81,21 @@ impl std::fmt::Display for Simple {
         }
 
         if let Some(finish_date) = self.finish_date {
-            f.write_str(&format!("{} ", finish_date.format("%Y-%m-%d")))?;
+            write!(f, "{} ", finish_date.strftime("%Y-%m-%d"))?;
         }
 
         if let Some(create_date) = self.create_date {
-            f.write_str(&format!("{} ", create_date.format("%Y-%m-%d")))?;
+            write!(f, "{} ", create_date.strftime("%Y-%m-%d"))?;
         }
 
         f.write_str(&self.subject)?;
 
         if let Some(due_date) = self.due_date {
-            f.write_str(&format!(" due:{}", due_date.format("%Y-%m-%d")))?;
+            write!(f, " due:{}", due_date.strftime("%Y-%m-%d"))?;
         }
 
         if let Some(threshold_date) = self.threshold_date {
-            f.write_str(&format!(" t:{}", threshold_date.format("%Y-%m-%d")))?;
+            write!(f, " t:{}", threshold_date.strftime("%Y-%m-%d"))?;
         }
 
         for context in &self.contexts {

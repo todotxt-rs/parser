@@ -1,14 +1,16 @@
-pub use chrono::NaiveDate as Date;
+pub use jiff::civil::Date;
 
 #[must_use]
 pub fn today() -> Date {
-    chrono::offset::Local::now().date_naive()
+    jiff::Zoned::now().date()
 }
 
 pub fn parse(s: &str) -> Option<Date> {
+    use jiff::ToSpan as _;
+
     static REGEX: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
 
-    if let Ok(date) = crate::Date::parse_from_str(s, "%Y-%m-%d") {
+    if let Ok(date) = crate::Date::strptime("%Y-%m-%d", s) {
         return Some(date);
     }
 
@@ -37,7 +39,7 @@ pub fn parse(s: &str) -> Option<Date> {
             days *= -1;
         }
 
-        let delta = chrono::TimeDelta::days(days);
+        let delta = days.days();
 
         return Some(today() + delta);
     }

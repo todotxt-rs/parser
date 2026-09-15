@@ -30,7 +30,7 @@ mod test {
         let line = "x 2017-11-25 subject".to_string();
         let task = todo_txt::task::Simple {
             subject: "subject".to_string(),
-            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
+            create_date: todo_txt::Date::new(2017, 11, 25).ok(),
             finished: true,
             ..Default::default()
         };
@@ -55,8 +55,8 @@ mod test {
         let line = "x 2017-11-26 2017-11-25 subject".to_string();
         let task = todo_txt::task::Simple {
             subject: "subject".to_string(),
-            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
-            finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
+            create_date: todo_txt::Date::new(2017, 11, 25).ok(),
+            finish_date: todo_txt::Date::new(2017, 11, 26).ok(),
             finished: true,
             ..Default::default()
         };
@@ -70,8 +70,8 @@ mod test {
         let task = todo_txt::task::Simple {
             subject: "subject".to_string(),
             priority: 0.into(),
-            create_date: todo_txt::Date::from_ymd_opt(2017, 11, 25),
-            finish_date: todo_txt::Date::from_ymd_opt(2017, 11, 26),
+            create_date: todo_txt::Date::new(2017, 11, 25).ok(),
+            finish_date: todo_txt::Date::new(2017, 11, 26).ok(),
             finished: true,
             ..Default::default()
         };
@@ -204,7 +204,7 @@ mod test {
         let line = "Email SoAndSo at soandso@example.com due:2018-01-01".to_string();
         let task = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com".to_string(),
-            due_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
+            due_date: todo_txt::Date::new(2018, 1, 1).ok(),
 
             ..Default::default()
         };
@@ -217,7 +217,7 @@ mod test {
         let line = "Email SoAndSo at soandso@example.com t:2018-01-01".to_string();
         let task = todo_txt::task::Simple {
             subject: "Email SoAndSo at soandso@example.com".to_string(),
-            threshold_date: todo_txt::Date::from_ymd_opt(2018, 1, 1),
+            threshold_date: todo_txt::Date::new(2018, 1, 1).ok(),
 
             ..Default::default()
         };
@@ -231,7 +231,7 @@ mod test {
 
         let task = todo_txt::task::Simple {
             subject: "Open issue on todo-txt parser".to_string(),
-            threshold_date: todo_txt::Date::from_ymd_opt(2018, 4, 3),
+            threshold_date: todo_txt::Date::new(2018, 4, 3).ok(),
             priority: 2.into(),
 
             ..Default::default()
@@ -248,7 +248,7 @@ mod test {
         let line = "2018-03-26 test url:http://example.org".to_string();
         let task = todo_txt::task::Simple {
             subject: "test".to_string(),
-            create_date: todo_txt::Date::from_ymd_opt(2018, 3, 26),
+            create_date: todo_txt::Date::new(2018, 3, 26).ok(),
             tags: keywords,
 
             ..Default::default()
@@ -259,11 +259,13 @@ mod test {
 
     #[test]
     fn relative_date() {
+        use jiff::ToSpan as _;
+
         let line = "relative due due:6months t:-7d".to_string();
         let task = todo_txt::parser::task(&line);
 
-        let due_date = todo_txt::date::today() + chrono::TimeDelta::days((6. * 30.5) as i64);
-        let threshold_date = todo_txt::date::today() - chrono::TimeDelta::weeks(1);
+        let due_date = todo_txt::date::today() + ((6. * 30.5) as i32).days();
+        let threshold_date = todo_txt::date::today() - 1.weeks();
 
         assert_eq!(task.due_date, Some(due_date));
         assert_eq!(task.threshold_date, Some(threshold_date));
