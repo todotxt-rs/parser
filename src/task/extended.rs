@@ -98,7 +98,7 @@ impl std::ops::DerefMut for Extended {
 
 impl std::fmt::Display for Extended {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&format!("{}", &**self))?;
+        f.write_str(&format!("{}", self.inner))?;
 
         if self.note != super::Note::None {
             f.write_str(&format!(" {}", self.note))?;
