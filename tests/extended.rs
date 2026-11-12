@@ -76,4 +76,21 @@ mod test {
 
         assert!(extra.flagged);
     }
+
+    #[test]
+    fn test_to_string() {
+        let task = todo_txt::task::Extended {
+            inner: todo_txt::task::Simple {
+                subject: "Subject".to_string(),
+
+                ..Default::default()
+            },
+            flagged: true,
+            hidden: true,
+
+            ..Default::default()
+        };
+
+        assert_eq!(task.to_string(), "Subject f:1 h:1");
+    }
 }
