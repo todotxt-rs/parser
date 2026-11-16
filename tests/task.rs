@@ -109,10 +109,7 @@ mod test {
         assert!(!task.finished);
         assert_eq!(task.contexts[0], "context_a");
         assert_eq!(task.contexts[1], "context_b");
-        assert_eq!(
-            task.threshold_date,
-            todo_txt::Date::new(2018, 3, 2).ok()
-        );
+        assert_eq!(task.threshold_date, todo_txt::Date::new(2018, 3, 2).ok());
         assert_eq!(task.due_date, todo_txt::Date::new(2018, 3, 3).ok());
         assert!(task.projects.is_empty());
         assert_eq!(task.hashtags[0], "tag_a");

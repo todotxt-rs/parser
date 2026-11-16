@@ -53,8 +53,8 @@ impl std::ops::Add<jiff::civil::Date> for Recurrence {
     type Output = jiff::civil::Date;
 
     fn add(self, rhs: Self::Output) -> Self::Output {
-        use jiff::ToSpan as _;
         use super::Period::{self, *};
+        use jiff::ToSpan as _;
 
         let delta_months = match self.period {
             #[allow(clippy::suspicious_arithmetic_impl)]
