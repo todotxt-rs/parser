@@ -2,7 +2,7 @@ pub use jiff::civil::Date;
 
 #[must_use]
 pub fn today() -> Date {
-    jiff::Zoned::now().date()
+    jiff::ZonedDateTime::now().date()
 }
 
 pub fn parse(s: &str) -> Option<Date> {

@@ -24,7 +24,7 @@ pub struct Simple {
 
 impl Simple {
     pub fn complete(&mut self) {
-        let today = jiff::Zoned::now().date();
+        let today = jiff::ZonedDateTime::now().date();
 
         self.finished = true;
         if self.create_date.is_some() {

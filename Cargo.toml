@@ -9,7 +9,7 @@ repository = "https://github.com/todotxt-rs/parser"
 edition = "2024"
 
 [dependencies]
-jiff = "0.2"
+jiff = "1.0"
 nom = "8.0"
 regex = "1.0"
 thiserror = "2.0"
